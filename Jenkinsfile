@@ -29,5 +29,14 @@ pipeline {
                 '''
             }
         }
+        stage('Deploy to TEST') {
+            when { not { branch "main" } }
+            steps {
+                sh '''
+                    oc rollout latest deploymentconfig/home-automation \
+                    -n kcfwng-deploying-lab-test
+                '''
+            }
+        }
     }
 }
